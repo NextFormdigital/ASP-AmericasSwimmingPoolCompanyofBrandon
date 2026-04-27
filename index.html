@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASP - Brandon Pool Services</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#0b1220;
+  color:#eaeef7;
+}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  padding:16px;
+  background:#020617;
+}
+
+nav span{
+  margin-left:12px;
+  color:#7dd3fc;
+  cursor:pointer;
+}
+
+.hero{
+  padding:80px 20px;
+  text-align:center;
+  background:linear-gradient(135deg,#0ea5e9,#22d3ee);
+  color:#001018;
+}
+
+button{
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+  background:#22d3ee;
+  color:#001018;
+  cursor:pointer;
+}
+
+.section{
+  padding:50px 20px;
+  text-align:center;
+}
+
+.service{
+  margin:6px;
+}
+
+#box{
+  margin-top:20px;
+  padding:16px;
+  background:#111c33;
+  border-radius:10px;
+  max-width:600px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.panel{
+  position:fixed;
+  right:-100%;
+  top:0;
+  width:320px;
+  height:100%;
+  background:#0f172a;
+  padding:20px;
+  transition:0.3s;
+}
+
+.panel.open{
+  right:0;
+}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  display:none;
+}
+
+.overlay.show{
+  display:block;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div>ASP Brandon</div>
+  <nav>
+    <span onclick="scrollToSec('services')">Services</span>
+    <span onclick="openPanel()">Book</span>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Clean Water. Clean Work.</h1>
+  <p>Premium pool service in Brandon, Florida</p>
+  <button onclick="openPanel()">Book Now</button>
+</section>
+
+<section class="section" id="services">
+  <h2>Services</h2>
+
+  <button class="service" onclick="show('Cleaning')">Pool Cleaning</button>
+  <button class="service" onclick="show('Commercial')">Commercial</button>
+  <button class="service" onclick="show('Repair')">Repair</button>
+  <button class="service" onclick="show('One-Time')">One-Time</button>
+
+  <div id="box">Click a service</div>
+</section>
+
+<div class="overlay" id="overlay" onclick="closePanel()"></div>
+
+<div class="panel" id="panel">
+  <h3>Book Service</h3>
+
+  <input placeholder="Name"><br><br>
+  <input placeholder="Email"><br><br>
+
+  <select>
+    <option>Pool Cleaning</option>
+    <option>Commercial</option>
+    <option>Repair</option>
+  </select><br><br>
+
+  <button onclick="submitForm()">Submit</button>
+</div>
+
+<script>
+function show(type){
+  const map = {
+    Cleaning:"Full residential pool cleaning service.",
+    Commercial:"Large scale commercial pool maintenance.",
+    Repair:"Equipment diagnostics and repair service.",
+    "One-Time":"Deep single-session cleaning service."
+  };
+
+  document.getElementById("box").innerText = map[type];
+}
+
+function openPanel(){
+  document.getElementById("panel").classList.add("open");
+  document.getElementById("overlay").classList.add("show");
+}
+
+function closePanel(){
+  document.getElementById("panel").classList.remove("open");
+  document.getElementById("overlay").classList.remove("show");
+}
+
+function scrollToSec(id){
+  document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+
+function submitForm(){
+  alert("Booking received. We'll contact you soon.");
+  closePanel();
+}
+</script>
+
+</body>
+</html>
