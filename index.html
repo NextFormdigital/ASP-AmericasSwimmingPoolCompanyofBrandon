@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASP - America's Swimming Pool Company of Brandon</title>
+
+<style>
+:root{
+  --bg:#070b18;
+  --panel:rgba(255,255,255,0.06);
+  --stroke:rgba(255,255,255,0.12);
+  --text:#e9edf5;
+  --muted:#a9b4c7;
+  --gold:#d4af37;
+  --accent:#7dd3fc;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  background:radial-gradient(circle at top,#0b1430,#070b18);
+  color:var(--text);
+}
+
+/* HEADER */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 24px;
+  position:sticky;
+  top:0;
+  backdrop-filter:blur(10px);
+  background:rgba(7,11,24,0.6);
+  border-bottom:1px solid var(--stroke);
+}
+
+header h2{
+  margin:0;
+  font-weight:600;
+  letter-spacing:0.5px;
+}
+
+nav a{
+  margin-left:14px;
+  color:var(--muted);
+  text-decoration:none;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+nav a:hover{
+  color:var(--gold);
+}
+
+/* HERO */
+.hero{
+  text-align:center;
+  padding:110px 20px 90px;
+}
+
+.hero h1{
+  font-size:42px;
+  margin:0 0 10px;
+  letter-spacing:0.5px;
+}
+
+.hero p{
+  color:var(--muted);
+  max-width:600px;
+  margin:0 auto;
+}
+
+.hero button{
+  margin-top:20px;
+  padding:12px 22px;
+  border:1px solid var(--gold);
+  background:transparent;
+  color:var(--gold);
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.hero button:hover{
+  background:var(--gold);
+  color:#000;
+}
+
+/* SECTION */
+.section{
+  padding:60px 20px;
+  text-align:center;
+}
+
+.section h2{
+  font-weight:600;
+  margin-bottom:18px;
+}
+
+/* SERVICE BUTTONS */
+.buttons{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  max-width:900px;
+  margin:0 auto;
+}
+
+.buttons button{
+  padding:10px 14px;
+  border-radius:10px;
+  border:1px solid var(--stroke);
+  background:var(--panel);
+  color:var(--text);
+  cursor:pointer;
+  transition:0.25s;
+  font-size:13px;
+}
+
+.buttons button:hover{
+  border-color:var(--gold);
+  color:var(--gold);
+  transform:translateY(-2px);
+}
+
+.buttons button.active{
+  border-color:var(--gold);
+  color:var(--gold);
+  box-shadow:0 0 20px rgba(212,175,55,0.15);
+}
+
+#service-box{
+  margin-top:22px;
+  padding:20px;
+  max-width:700px;
+  margin-left:auto;
+  margin-right:auto;
+  border-radius:14px;
+  background:var(--panel);
+  border:1px solid var(--stroke);
+  color:var(--muted);
+  min-height:60px;
+}
+
+/* MAP */
+iframe{
+  width:100%;
+  height:320px;
+  border:0;
+  border-radius:14px;
+  filter:grayscale(0.2) contrast(1.1);
+}
+
+/* BOOKING SLIDE */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.55);
+  display:none;
+}
+
+.overlay.show{display:block}
+
+.panel{
+  position:fixed;
+  right:-420px;
+  top:0;
+  width:380px;
+  height:100%;
+  background:rgba(15,23,42,0.85);
+  backdrop-filter:blur(16px);
+  border-left:1px solid var(--stroke);
+  padding:22px;
+  transition:0.35s ease;
+}
+
+.panel.open{right:0}
+
+.panel h2{
+  margin-top:10px;
+}
+
+input,select{
+  width:100%;
+  margin:8px 0;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--stroke);
+  background:rgba(255,255,255,0.04);
+  color:var(--text);
+  outline:none;
+}
+
+button.submit{
+  margin-top:10px;
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  background:var(--gold);
+  color:#000;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.close{
+  background:none;
+  border:none;
+  color:var(--muted);
+  cursor:pointer;
+  float:right;
+}
+
+.close:hover{
+  color:var(--gold);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h2>ASP Brandon</h2>
+  <nav>
+    <a onclick="scrollTo('services')">Services</a>
+    <a onclick="scrollTo('map')">Location</a>
+    <a onclick="openPanel()">Book</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Luxury Pool Care, Refined</h1>
+  <p>America’s Swimming Pool Company of Brandon delivers precision maintenance, crystal water, and quiet reliability.</p>
+  <button onclick="openPanel()">Schedule Service</button>
+</section>
+
+<section class="section" id="services">
+  <h2>Services</h2>
+
+  <div class="buttons">
+    <button onclick="pick(this,'clean')">Pool Cleaning</button>
+    <button onclick="pick(this,'comm')">Commercial Care</button>
+    <button onclick="pick(this,'repair')">Equipment Repair</button>
+    <button onclick="pick(this,'once')">One-Time Service</button>
+    <button onclick="pick(this,'ongoing')">Ongoing Care</button>
+    <button onclick="pick(this,'season')">Seasonal Service</button>
+    <button onclick="pick(this,'tile')">Tile Work</button>
+    <button onclick="pick(this,'water')">Water Balance</button>
+  </div>
+
+  <div id="service-box">Select a service to view details.</div>
+</section>
+
+<section class="section" id="map">
+  <h2>Location</h2>
+  <iframe 
+    src="https://www.google.com/maps?q=3402+Cypress+Landing+Drive+Valrico+Florida+33596&output=embed">
+  </iframe>
+</section>
+
+<!-- BOOKING -->
+<div class="overlay" id="overlay" onclick="closePanel()"></div>
+
+<div class="panel" id="panel">
+  <button class="close" onclick="closePanel()">close ✕</button>
+  <h2>Book Service</h2>
+
+  <form id="form">
+    <input id="name" placeholder="Name" required>
+    <input id="email" placeholder="Email" required>
+
+    <select id="service" required>
+      <option value="">Select Service</option>
+      <option>Pool Cleaning</option>
+      <option>Commercial Care</option>
+      <option>Equipment Repair</option>
+      <option>One-Time Service</option>
+      <option>Ongoing Care</option>
+      <option>Seasonal Service</option>
+      <option>Tile Work</option>
+      <option>Water Balance</option>
+    </select>
+
+    <input type="date" required>
+
+    <button class="submit" type="submit">Confirm Booking</button>
+  </form>
+
+  <p id="msg"></p>
+</div>
+
+<script>
+const data={
+ clean:"Routine luxury cleaning for crystal-clear water.",
+ comm:"High-capacity maintenance for commercial pools.",
+ repair:"Precision diagnostics and system repair.",
+ once:"Deep restoration for special occasions.",
+ ongoing:"Scheduled maintenance with consistent care.",
+ season:"Opening and closing seasonal protection.",
+ tile:"Detailed tile polishing and surface restoration.",
+ water:"Chemical balancing for perfect swim conditions."
+};
+
+function pick(btn,key){
+ document.getElementById("service-box").innerText=data[key];
+
+ document.querySelectorAll(".buttons button")
+ .forEach(b=>b.classList.remove("active"));
+
+ btn.classList.add("active");
+}
+
+function scrollTo(id){
+ document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+
+function openPanel(){
+ document.getElementById("panel").classList.add("open");
+ document.getElementById("overlay").classList.add("show");
+}
+
+function closePanel(){
+ document.getElementById("panel").classList.remove("open");
+ document.getElementById("overlay").classList.remove("show");
+}
+
+document.getElementById("form").addEventListener("submit",e=>{
+ e.preventDefault();
+ document.getElementById("msg").innerText="Request received. We'll contact you shortly.";
+ e.target.reset();
+});
+</script>
+
+</body>
+</html>
